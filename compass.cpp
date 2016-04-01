@@ -2,15 +2,7 @@
 #include <Wire.h>
 #include "compass.h"
 
-Compass::Compass(int _address): address(_address) {
-  Serial.begin(9600);
-  Wire.begin();
-  Wire.beginTransmission(address);
-  Serial.println(Wire.write(0x02));
-  Serial.println(Wire.write(0x00));
-  Wire.endTransmission();
-  Serial.println("Setup complete");
-}
+Compass::Compass(int _address): address(_address) {}
 
 Compass::~Compass() {}
 
@@ -41,5 +33,13 @@ float Compass::getAngleReading() const {
   }
 
   return heading;
+}
+
+void Compass::prepare() {
+  Wire.beginTransmission(address);
+  Serial.println(Wire.write(0x02));
+  Serial.println(Wire.write(0x00));
+  Wire.endTransmission();
+  Serial.println("Setup complete");
 }
 

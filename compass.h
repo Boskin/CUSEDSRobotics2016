@@ -8,6 +8,8 @@ private:
 public:
   // Return an angle bearing of the direction the compass is facing
   float getAngleReading() const;
+
+  void prepare();
   
   Compass(int _address);
   ~Compass();
