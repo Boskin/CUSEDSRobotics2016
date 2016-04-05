@@ -57,8 +57,8 @@ const struct MotorControllerPorts {
   {7, 38, 39}
 };
 
-const int COUNTER_CLOCKWISE = 0;
-const int CLOCKWISE = 1;
+const int DIR_RIGHT = 0;
+const int DIR_LEFT = 1;
 
 // All motors will share the same standby port
 const int GLOBAL_STANDBY = 26;
