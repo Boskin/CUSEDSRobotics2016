@@ -10,7 +10,8 @@ public:
   float getAngleReading() const;
 
   void prepare();
-  
+
+  Compass();
   Compass(int _address);
   ~Compass();
 };

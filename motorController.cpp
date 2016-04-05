@@ -9,6 +9,8 @@ void MotorController::setupStandby() {
   pinMode(GLOBAL_STANDBY, OUTPUT);
 }
 
+MotorController::MotorController(): ports({0, 0, 0}) {}
+
 MotorController::MotorController(MotorControllerPorts _ports): ports(_ports) {
   // Setup pins that control motor a
   pinMode(ports.pwm, OUTPUT);

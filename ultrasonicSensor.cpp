@@ -1,6 +1,8 @@
 #include <Arduino.h> // Includes built-in Arduino fields like HIGH, OUTPUT, etc.
 #include "ultrasonicSensor.h"
 
+UltrasonicSensor::UltrasonicSensor(): ports({0, 0}) {}
+
 UltrasonicSensor::UltrasonicSensor(UltrasonicPort _ports): ports(_ports) {
   // Double check later
   pinMode(ports.trig, OUTPUT);

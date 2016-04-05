@@ -9,7 +9,8 @@ private:
   
 public:
   float getDistance() const;
-  
+
+  UltrasonicSensor();
   UltrasonicSensor(UltrasonicPort _ports);
   ~UltrasonicSensor();
 };

@@ -2,6 +2,8 @@
 #include <Wire.h>
 #include "compass.h"
 
+Compass::Compass(): address(-1) {}
+
 Compass::Compass(int _address): address(_address) {}
 
 Compass::~Compass() {}

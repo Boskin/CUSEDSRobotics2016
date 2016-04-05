@@ -16,6 +16,7 @@ public:
      direction */
   void drive(int power, int dir);
 
+  MotorController();
   MotorController(MotorControllerPorts _ports);
   ~MotorController();
 };
