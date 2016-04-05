@@ -17,6 +17,9 @@ public:
   static void standby(bool enable);
   static void setupStandby();
 
+  void driveStraight(int power);
+  void turn(int power, int dir);
+
   Drivetrain();
   Drivetrain(MotorControllerPorts _frontLeftPorts, MotorControllerPorts _frontRightPorts,
     MotorControllerPorts _midLeftPorts, MotorControllerPorts _midRightPorts,
