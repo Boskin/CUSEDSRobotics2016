@@ -12,16 +12,16 @@ MotorController::MotorController(MotorControllerPorts _ports): ports(_ports) {
 
 MotorController::~MotorController() {}
 
-void MotorController::drive(int power, int dir) {
+void MotorController::drive(int power) {
   // Control signals sent to either motor of the mode control pins
   bool dirControl1;
   bool dirControl2;
 
-  if(dir == COUNTER_CLOCKWISE) {
+  if(power > 0) {
     // Let the motor rotate counter-clockwise
     dirControl1 = HIGH;
     dirControl2 = LOW;
-  } else if(dir == CLOCKWISE) {
+  } else if(power < 0) {
     // Let the motor rotate clockwise
     dirControl1 = LOW;
     dirControl2 = HIGH;

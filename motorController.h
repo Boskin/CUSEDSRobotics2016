@@ -10,9 +10,9 @@ private:
   MotorControllerPorts ports;
   
 public:
-  /* Drive the motor with a given power (0-255) and a given
-     direction */
-  void drive(int power, int dir);
+  /* Drive the motor with the given power, negative value means 
+     clockwise */
+  void drive(int power);
 
   MotorController();
   MotorController(MotorControllerPorts _ports);
