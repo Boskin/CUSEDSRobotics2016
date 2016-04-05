@@ -1,14 +1,6 @@
 #include <Arduino.h>
 #include "motorController.h"
 
-void MotorController::standby(bool enable) {
-  digitalWrite(GLOBAL_STANDBY, enable);
-}
-
-void MotorController::setupStandby() {
-  pinMode(GLOBAL_STANDBY, OUTPUT);
-}
-
 MotorController::MotorController(): ports({0, 0, 0}) {}
 
 MotorController::MotorController(MotorControllerPorts _ports): ports(_ports) {
@@ -18,10 +10,7 @@ MotorController::MotorController(MotorControllerPorts _ports): ports(_ports) {
   pinMode(ports.in2, OUTPUT);
 }
 
-MotorController::~MotorController() {
-  // Since high level control of the motor is lost beyond this point, stop the motors
-  standby(HIGH);
-}
+MotorController::~MotorController() {}
 
 void MotorController::drive(int power, int dir) {
   // Control signals sent to either motor of the mode control pins

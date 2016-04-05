@@ -10,8 +10,6 @@ private:
   MotorControllerPorts ports;
   
 public:
-  static void standby(bool enable);
-  static void setupStandby();
   /* Drive the motor with a given power (0-255) and a given
      direction */
   void drive(int power, int dir);
