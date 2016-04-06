@@ -23,10 +23,10 @@ void Drivetrain::turn(int power, int dir) {
   int rightPower;
   int leftPower;
   
-  if(dir == RIGHT) {
+  if(dir == DIR_RIGHT) {
     rightPower = power * REGULAR_MOTOR_DRIVE.turnSpeedSlowFactor;
     leftPower = -power * REGULAR_MOTOR_DRIVE.turnSpeedFastFactor;
-  } else if(dir == LEFT) {
+  } else if(dir == DIR_LEFT) {
     rightPower = power * REGULAR_MOTOR_DRIVE.turnSpeedFastFactor;
     leftPower = -power * REGULAR_MOTOR_DRIVE.turnSpeedSlowFactor;
   } else {
