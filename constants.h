@@ -1,13 +1,9 @@
 #ifndef CONSTANTS_H
 #define CONSTANTS_H
 
-const struct RobotState {
-  int driveTowardGoal;
-  int avoidObstacleLeft;
-  int avoidObstacleRight;
-} ROBOT_STATES = {
-  0, 1, 2
-};
+const int DRIVE_TOWARD_GOAL = 0;
+const int AVOID_OBSTACLE_LEFT = 1;
+const int AVOID_OBSTACLE_RIGHT = 2;
 
 // These are all subject to change
 const struct UltrasonicPort {
