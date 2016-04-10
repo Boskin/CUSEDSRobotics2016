@@ -18,6 +18,9 @@ const struct UltrasonicPort {
 // Factor to multiply duration by to get distance
 const float DURATION_DISTANCE_FACTOR = 1 / 58.2;
 
+// In cm
+const int OBJECT_TOO_CLOSE = 20;
+
 // Work in progress
 const struct CompassPort {
   int sda;
