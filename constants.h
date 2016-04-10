@@ -20,7 +20,7 @@ const struct UltrasonicPort {
 const float DURATION_DISTANCE_FACTOR = 1 / 58.2;
 
 // In cm
-const int OBJECT_TOO_CLOSE = 20;
+const float OBJECT_TOO_CLOSE = 20.0f;
 
 // Work in progress
 const struct CompassPort {
