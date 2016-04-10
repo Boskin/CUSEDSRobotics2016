@@ -6,8 +6,9 @@ const struct UltrasonicPort {
   int trig;
   int echo;
 } ULTRASONIC_PORTS[] = {
-  {22, 23}, // Trig and echo for sensor 0
-  {24, 25} // Trig and echo for sensor 1
+  {22, 23}, // Trig and echo for left sensor
+  {24, 25}, // Trig and echo for center sensor
+  {50, 51} // Trig and echo for right sensor
 };
 
 // Factor to multiply duration by to get distance
