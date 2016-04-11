@@ -5,6 +5,9 @@ const int DRIVE_TOWARD_GOAL = 0;
 const int AVOID_OBSTACLE_LEFT = 1;
 const int AVOID_OBSTACLE_RIGHT = 2;
 const int AVOID_OBSTACLE_BACK = 3;
+const int PROCEED_LEFT = 4;
+const int PROCEED_RIGHT = 5;
+const int ALLIGN_WITH_GOAL = 6;
 
 // These are all subject to change
 const struct UltrasonicPort {
