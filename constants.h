@@ -7,7 +7,9 @@ const int AVOID_OBSTACLE_RIGHT = 2;
 const int AVOID_OBSTACLE_BACK = 3;
 const int PROCEED_LEFT = 4;
 const int PROCEED_RIGHT = 5;
-const int ALLIGN_WITH_GOAL = 6;
+const int ALIGN_WITH_GOAL = 6;
+
+const float ANGLE_EQUALITY_TOLERANCE = 5.0f;
 
 // These are all subject to change
 const struct UltrasonicPort {
