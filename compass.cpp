@@ -4,7 +4,10 @@
 
 Compass::Compass(): address(-1) {}
 
-Compass::Compass(int _address): address(_address) {}
+Compass::Compass(int _address): address(_address) {
+  referenceAngle = 0.0f;
+  referenceAngle = getAngleReading();
+}
 
 Compass::~Compass() {}
 
@@ -29,12 +32,12 @@ float Compass::getAngleReading() const {
     y |= Wire.read();
   }
 
-  heading = atan2(y, x);
+  heading = 180 * atan2(y, x) / PI;
   if(heading < 0) {
-    heading += 2 * PI;
+    heading += 360.0f
   }
 
-  return heading;
+  return heading - referenceAngle;
 }
 
 void Compass::prepare() {

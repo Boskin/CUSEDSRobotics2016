@@ -5,6 +5,8 @@ class Compass {
 private:
   // I2C address of the device
   int address;
+
+  float referenceAngle;
 public:
   // Return an angle bearing of the direction the compass is facing
   float getAngleReading() const;
