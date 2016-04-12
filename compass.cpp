@@ -34,7 +34,7 @@ float Compass::getAngleReading() const {
 
   heading = 180 * atan2(y, x) / PI;
   if(heading < 0) {
-    heading += 360.0f
+    heading += 360.0f;
   }
 
   return heading - referenceAngle;
