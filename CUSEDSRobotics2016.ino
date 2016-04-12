@@ -41,77 +41,7 @@ void setup() {
   Drivetrain::standby(HIGH);
 }
 
-float getBearingRads() {
-  return 0.0f; // Write this later
-}
-
-bool equalWithinTolerance(float a, float b, float tolerance) {
-  float bLower = (1 - tolerance) * b;
-  float bUpper = (1 + tolerance) * b;
-  return a > bLower && a < bUpper;
-}
-
-int avoidObstacle(int dirState) {
-  static float lastSensorReading;
-  float currentSensorReading;
-  int dirTurn;
-
-  if(dirState == AVOID_OBSTACLE_LEFT) {
-    currentSensorReading = rightUltrasonic.getDistance();
-    dirTurn = DIR_LEFT;
-  } else if(dirState == AVOID_OBSTACLE_RIGHT) {
-    currentSensorReading = leftUltrasonic.getDistance();
-    dirTurn = DIR_RIGHT;
-  } else {
-    return -1;
-  }
-
-  if(currentSensorReading - lastSensorReading < 0.0f || lastSensorReading == 0.0f) {
-    drivetrain.turn(REGULAR_MOTOR_DRIVE.straightSpeedFactor, dirTurn);
-    lastSensorReading = currentSensorReading;
-    return dirState;
-  } else {
-    lastSensorReading = 0.0f;
-    return dirTurn == DIR_LEFT ? PROCEED_LEFT : PROCEED_RIGHT;
-  }
-}
-
-int proceed(int dirState) {
-  
-}
-
-int driveTowardGoal() {
-  float compassBearing = compass.getAngleReading();
-  float beaconBearing = getBearingRads();
-
-  drivetrain.driveStraight(REGULAR_MOTOR_DRIVE.straightSpeedFactor);
-
-  if(centerUltrasonic.getDistance() <= OBJECT_TOO_CLOSE) {
-    float leftReading = leftUltrasonic.getDistance();
-    float rightReading = rightUltrasonic.getDistance();
-
-    float dirToChoose = leftReading >= rightReading ? leftReading : rightReading;
-
-    drivetrain.driveStraight(0);
-    if(dirToChoose > OBJECT_TOO_CLOSE) {
-      return leftReading >= rightReading ? AVOID_OBSTACLE_LEFT : AVOID_OBSTACLE_RIGHT;
-    } else {
-      return AVOID_OBSTACLE_BACK;
-    }
-  } else {
-    return DRIVE_TOWARD_GOAL;
-  }
-}
-
 void loop() {
   // put your main code here, to run repeatedly:
-  switch(currentRobotState) {
-  case DRIVE_TOWARD_GOAL:
-    break;
-  case AVOID_OBSTACLE_LEFT:
-  case AVOID_OBSTACLE_RIGHT:
-    break;
-  default:
-    Drivetrain::standby(LOW);
-  }
+  
 }
