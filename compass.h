@@ -11,6 +11,8 @@ public:
   // Return an angle bearing of the direction the compass is facing
   float getAngleReading() const;
 
+  float getReferenceAngle() const;
+
   void prepare();
 
   Compass();
