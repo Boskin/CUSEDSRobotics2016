@@ -63,12 +63,12 @@ const struct MotorControllerPorts {
   int in1;
   int in2;
 } MOTOR_CONTROLLER_PORTS[] = {
-  {2, 28, 29}, // PWM, IN1, IN2
-  {3, 30, 31},
-  {4, 32, 33},
-  {5, 34, 35},
-  {6, 36, 37},
-  {7, 38, 39}
+  {2, 28, 29}, // Rear left
+  {3, 30, 31}, // Front right
+  {4, 32, 33}, // Front left
+  {5, 34, 35}, // Rear right
+  {6, 36, 37}, // Mid left
+  {7, 38, 39} // Mid right
 };
 
 const int DIR_RIGHT = 0;
