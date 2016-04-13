@@ -17,11 +17,11 @@ void MotorController::drive(int power) {
   bool dirControl1;
   bool dirControl2;
 
-  if(power > 0) {
+  if(power < 0) {
     // Let the motor rotate counter-clockwise
     dirControl1 = HIGH;
     dirControl2 = LOW;
-  } else if(power < 0) {
+  } else if(power > 0) {
     // Let the motor rotate clockwise
     dirControl1 = LOW;
     dirControl2 = HIGH;
