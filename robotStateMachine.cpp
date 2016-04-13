@@ -171,10 +171,18 @@ int RobotStateMachine::alignWithBeacon() {
       return DRIVE_TOWARD_GOAL;
     } else if(rotate > 180.0f) {
       // Turn left
-      drivetrain.turn(REGULAR_MOTOR_DRIVE.straightSpeedFactor, DIR_LEFT);
+      if(leftReading > OBJECT_TOO_CLOSE) {
+        drivetrain.turn(REGULAR_MOTOR_DRIVE.straightSpeedFactor, DIR_LEFT);
+      } else {
+        drivetrain.turn(REGULAR_MOTOR_DRIVE.straightSpeedFactor, DIR_RIGHT);
+      }
     } else {
       // Turn right
-      drivetrain.turn(REGULAR_MOTOR_DRIVE.straightSpeedFactor, DIR_RIGHT);
+      if(rightReading > OBJECT_TOO_CLOSE) {
+        drivetrain.turn(REGULAR_MOTOR_DRIVE.straightSpeedFactor, DIR_RIGHT);
+      } else {
+        drivetrain.turn(REGULAR_MOTOR_DRIVE.straightSpeedFactor, DIR_LEFT);
+      }
     }
   }
 
