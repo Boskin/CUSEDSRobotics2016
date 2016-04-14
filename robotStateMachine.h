@@ -25,6 +25,9 @@ public:
 
   float getAngleToRotateTo();
 
+  int getState();
+  void setState(int _currentState);
+
   RobotStateMachine();
   RobotStateMachine(
     Drivetrain _drivetrain,

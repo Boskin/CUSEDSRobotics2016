@@ -4,7 +4,20 @@
 
 // This needs to be properly implemented by talking to the XBEE...
 float getBeaconBearing() {
-  return 0.0f;
+  int i = 0;
+  delay(2);
+  char bufferRead[256];
+  while(Serial1.available()){
+    bufferRead[i] = Serial1.read();
+    i++;
+  }
+  //if(i > 0) {
+    bufferRead[i - 1] = '\0';
+    String number = bufferRead;
+    return (float)number.toInt();
+  /*} else {
+    return 0;
+  } */
 }
 
 bool equalWithinTolerance(float a, float b, float tolerance) {
@@ -28,7 +41,7 @@ RobotStateMachine::RobotStateMachine(
   rightUltrasonic(_rightUltrasonic),
   centerUltrasonic(_centerUltrasonic),
   leftUltrasonic(_leftUltrasonic) {
-  
+  currentState = DRIVE_TOWARD_GOAL;
 }
 
 RobotStateMachine::~RobotStateMachine() {}
@@ -37,24 +50,29 @@ void RobotStateMachine::stateControl() {
   switch(currentState) {
   case DRIVE_TOWARD_GOAL:
     currentState = driveTowardGoal();
+    Serial.println("Drive toward goal");
     break;
   
   case AVOID_OBSTACLE_LEFT:
   case AVOID_OBSTACLE_RIGHT:
     currentState = avoidObstacle();
+    Serial.println("Avoid obstacle");
     break;
 
   case AVOID_OBSTACLE_BACK:
     currentState = avoidObstacleTrapped();
+    Serial.println("Avoid obstacle behind");
     break;
 
   case PROCEED_LEFT:
   case PROCEED_RIGHT:
     currentState = proceed();
+    Serial.println("Proceed");
     break;
 
   case ALIGN_WITH_GOAL:
     currentState = alignWithBeacon();
+    Serial.println("Align");
     break;
 
   default:
@@ -77,7 +95,8 @@ int RobotStateMachine::avoidObstacle() {
     return -1;
   }
 
-  if(currentSensorReading - lastSensorReading < 0.0f || lastSensorReading == 0.0f) {
+  if(currentSensorReading - lastSensorReading < 0.0f || lastSensorReading == 0.0f ||
+     centerUltrasonic.getDistance() <= OBJECT_TOO_CLOSE) {
     drivetrain.turn(REGULAR_MOTOR_DRIVE.straightSpeedFactor, dirTurn);
     lastSensorReading = currentSensorReading;
     return currentState;
@@ -102,6 +121,17 @@ int RobotStateMachine::avoidObstacleTrapped() {
 
 int RobotStateMachine::proceed() {
   float sensorReading;
+
+  if(centerUltrasonic.getDistance() <= OBJECT_TOO_CLOSE) {
+    drivetrain.driveStraight(0);
+    if(currentState == PROCEED_LEFT) {
+      return AVOID_OBSTACLE_LEFT;
+    } else if(currentState == PROCEED_RIGHT) {
+      return AVOID_OBSTACLE_RIGHT;
+    } else {
+      return -1;
+    }
+  }
   
   if(currentState == PROCEED_LEFT) {
     sensorReading = rightUltrasonic.getDistance();
@@ -123,9 +153,10 @@ int RobotStateMachine::proceed() {
 int RobotStateMachine::driveTowardGoal() {
   float rotate = getAngleToRotateTo();
 
-  if(!equalWithinTolerance(rotate, 0, ANGLE_EQUALITY_TOLERANCE)) {
+  /* if(!equalWithinTolerance(rotate, 0, ANGLE_EQUALITY_TOLERANCE)) {
+    drivetrain.driveStraight(0);
     return ALIGN_WITH_GOAL;
-  }
+  } */
 
   drivetrain.driveStraight(REGULAR_MOTOR_DRIVE.straightSpeedFactor);
 
@@ -171,14 +202,14 @@ int RobotStateMachine::alignWithBeacon() {
       return DRIVE_TOWARD_GOAL;
     } else if(rotate > 180.0f) {
       // Turn left
-      if(leftReading > OBJECT_TOO_CLOSE) {
+      if(leftSensorReading > OBJECT_TOO_CLOSE) {
         drivetrain.turn(REGULAR_MOTOR_DRIVE.straightSpeedFactor, DIR_LEFT);
       } else {
         drivetrain.turn(REGULAR_MOTOR_DRIVE.straightSpeedFactor, DIR_RIGHT);
       }
     } else {
       // Turn right
-      if(rightReading > OBJECT_TOO_CLOSE) {
+      if(rightSensorReading > OBJECT_TOO_CLOSE) {
         drivetrain.turn(REGULAR_MOTOR_DRIVE.straightSpeedFactor, DIR_RIGHT);
       } else {
         drivetrain.turn(REGULAR_MOTOR_DRIVE.straightSpeedFactor, DIR_LEFT);
@@ -190,14 +221,21 @@ int RobotStateMachine::alignWithBeacon() {
 }
 
 float RobotStateMachine::getAngleToRotateTo() {
-  float beaconBearing = getBeaconBearing();
-  float compassBearing = compass.getAngleReading();
-  float angleToRotate = compassBearing - beaconBearing + 180;
-  if(angleToRotate < 0) {
-    angleToRotate += 360.0f;
-  } else if(angleToRotate >= 360) {
-    angleToRotate -= 360;
+  float beaconReading = getBeaconBearing();
+  float compassReading = compass.getAngleReading();
+
+  if(beaconReading > 180) {
+    return compassReading - beaconReading + 180;
+  } else {
+    return compassReading - beaconReading - 180;
   }
-  return angleToRotate;
+}
+
+int RobotStateMachine::getState() {
+  return currentState;
+}
+
+void RobotStateMachine::setState(int _currentState) {
+  currentState = _currentState;
 }
 
