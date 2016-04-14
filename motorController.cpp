@@ -21,11 +21,11 @@ void MotorController::drive(int power) {
     // Let the motor rotate counter-clockwise
     dirControl1 = HIGH;
     dirControl2 = LOW;
+    power = -power;
   } else if(power > 0) {
     // Let the motor rotate clockwise
     dirControl1 = LOW;
     dirControl2 = HIGH;
-    power = -power;
   } else {
     // If an invalid dir value was given, just stop the motor
     dirControl1 = LOW;
