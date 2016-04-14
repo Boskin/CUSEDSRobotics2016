@@ -5,8 +5,6 @@
 Compass::Compass(): address(-1) {}
 
 Compass::Compass(int _address): address(_address) {
-  referenceAngle = 0.0f;
-  referenceAngle = getAngleReading();
 }
 
 Compass::~Compass() {}
@@ -33,11 +31,11 @@ float Compass::getAngleReading() const {
   }
 
   heading = 180 * atan2(y, x) / PI;
+  heading -= referenceAngle;
   if(heading < 0.0f) {
     heading += 360.0f;
   }
 
-  heading += referenceAngle;
   if(heading >= 360.0f) {
     heading -= 360.0f;
   }
@@ -54,6 +52,8 @@ void Compass::prepare() {
   Serial.println(Wire.write(0x02));
   Serial.println(Wire.write(0x00));
   Wire.endTransmission();
+  referenceAngle = 0.0f;
+  referenceAngle = getAngleReading();
   Serial.println("Setup complete");
 }
 
